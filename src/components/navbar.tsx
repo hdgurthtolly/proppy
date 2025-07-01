@@ -7,6 +7,7 @@ import {
 } from '@headlessui/react'
 import { Bars2Icon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { LanguageSwitcher } from './language-switcher'
 import { Link } from './link'
 import { Logo } from './logo'
@@ -19,13 +20,13 @@ const links = [
   { href: '/login', label: 'Login' },
 ]
 
-function DesktopNav() {
+function DesktopNav({ locale }: { locale: string }) {
   return (
     <nav className="relative hidden lg:flex">
       {links.map(({ href, label }) => (
         <PlusGridItem key={href} className="relative flex">
           <Link
-            href={href}
+            href={`/${locale}${href}`}
             className="flex items-center px-4 py-3 text-base font-medium text-gray-950 bg-blend-multiply data-hover:bg-black/2.5"
           >
             {label}
@@ -47,7 +48,7 @@ function MobileNavButton() {
   )
 }
 
-function MobileNav() {
+function MobileNav({ locale }: { locale: string }) {
   return (
     <DisclosurePanel className="lg:hidden">
       <div className="flex flex-col gap-6 py-4">
@@ -62,7 +63,7 @@ function MobileNav() {
             }}
             key={href}
           >
-            <Link href={href} className="text-base font-medium text-gray-950">
+            <Link href={`/${locale}${href}`} className="text-base font-medium text-gray-950">
               {label}
             </Link>
           </motion.div>
@@ -77,13 +78,17 @@ function MobileNav() {
 }
 
 export function Navbar({ banner }: { banner?: React.ReactNode }) {
+  const pathname = usePathname()
+  // Extract the current locale from the pathname
+  const locale = pathname.split('/')[1] || 'en'
+
   return (
     <Disclosure as="header" className="pt-12 sm:pt-16">
       <PlusGrid>
         <PlusGridRow className="relative flex justify-between">
           <div className="relative flex gap-6">
             <PlusGridItem className="py-3">
-              <Link href="/" title="Home">
+              <Link href={`/${locale}`} title="Home">
                 <Logo className="h-9" />
               </Link>
             </PlusGridItem>
@@ -97,12 +102,12 @@ export function Navbar({ banner }: { banner?: React.ReactNode }) {
             <div className="hidden lg:block">
               <LanguageSwitcher />
             </div>
-            <DesktopNav />
+            <DesktopNav locale={locale} />
           </div>
           <MobileNavButton />
         </PlusGridRow>
       </PlusGrid>
-      <MobileNav />
+      <MobileNav locale={locale} />
     </Disclosure>
   )
 }

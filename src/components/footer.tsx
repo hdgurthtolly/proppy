@@ -1,4 +1,7 @@
+'use client'
+
 import { PlusGrid, PlusGridItem, PlusGridRow } from '@/components/plus-grid'
+import { usePathname } from 'next/navigation'
 import { Button } from './button'
 import { Container } from './container'
 import { Gradient } from './gradient'
@@ -49,13 +52,13 @@ function SitemapLink(props: React.ComponentPropsWithoutRef<typeof Link>) {
   )
 }
 
-function Sitemap() {
+function Sitemap({ locale }: { locale: string }) {
   return (
     <>
       <div>
         <SitemapHeading>Product</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="/pricing">Pricing</SitemapLink>
+          <SitemapLink href={`/${locale}/pricing`}>Pricing</SitemapLink>
           <SitemapLink href="#">Analysis</SitemapLink>
           <SitemapLink href="#">API</SitemapLink>
         </SitemapLinks>
@@ -64,8 +67,8 @@ function Sitemap() {
         <SitemapHeading>Company</SitemapHeading>
         <SitemapLinks>
           <SitemapLink href="#">Careers</SitemapLink>
-          <SitemapLink href="/blog">Blog</SitemapLink>
-          <SitemapLink href="/company">Company</SitemapLink>
+          <SitemapLink href={`/${locale}/blog`}>Blog</SitemapLink>
+          <SitemapLink href={`/${locale}/company`}>Company</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
@@ -154,6 +157,9 @@ function Copyright() {
 }
 
 export function Footer() {
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en'
+
   return (
     <footer>
       <Gradient className="relative">
@@ -169,7 +175,7 @@ export function Footer() {
                   </PlusGridItem>
                 </div>
                 <div className="col-span-2 grid grid-cols-2 gap-x-8 gap-y-12 lg:col-span-4 lg:grid-cols-subgrid lg:pt-6">
-                  <Sitemap />
+                  <Sitemap locale={locale} />
                 </div>
               </div>
             </PlusGridRow>

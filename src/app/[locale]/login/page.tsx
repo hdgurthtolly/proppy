@@ -12,7 +12,13 @@ export const metadata: Metadata = {
   description: 'Sign in to your account to continue.',
 }
 
-export default function Login() {
+export default async function Login({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const resolvedParams = await params
+
   return (
     <main className="overflow-hidden bg-gray-50">
       <GradientBackground />
@@ -20,7 +26,7 @@ export default function Login() {
         <div className="w-full max-w-md rounded-xl bg-white shadow-md ring-1 ring-black/5">
           <form action="#" method="POST" className="p-7 sm:p-11">
             <div className="flex items-start">
-              <Link href="/" title="Home">
+              <Link href={`/${resolvedParams.locale}`} title="Home">
                 <Mark className="h-9 fill-black" />
               </Link>
             </div>

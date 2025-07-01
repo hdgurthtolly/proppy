@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     'Radiant helps you sell more by revealing sensitive information about your customers.',
 }
 
-function Hero({ dict }: { dict: any }) {
+function Hero({ dict, locale }: { dict: any; locale: string }) {
   return (
     <div className="relative">
       <Gradient className="absolute inset-2 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset" />
@@ -31,7 +31,7 @@ function Hero({ dict }: { dict: any }) {
         <Navbar
           banner={
             <Link
-              href="/blog/radiant-raises-100m-series-a-from-tailwind-ventures"
+              href={`/${locale}/blog/radiant-raises-100m-series-a-from-tailwind-ventures`}
               className="flex items-center gap-1 rounded-full bg-fuchsia-950/35 px-3 py-0.5 text-sm/6 font-medium text-white data-hover:bg-fuchsia-950/30"
             >
               {dict.hero.banner}
@@ -43,12 +43,12 @@ function Hero({ dict }: { dict: any }) {
           <h1 className="font-display text-6xl/[0.9] font-medium tracking-tight text-balance text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
             {dict.hero.title}
           </h1>
-          <p className="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
+          <p className="mt-8 max-w-2xl text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
             {dict.hero.description}
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
             <Button href="#">{dict.hero.primaryButton}</Button>
-            <Button variant="secondary" href="/pricing">
+            <Button variant="secondary" href={`/${locale}/pricing`}>
               {dict.hero.secondaryButton}
             </Button>
           </div>
@@ -200,7 +200,7 @@ export default async function Home({
 
   return (
     <div className="overflow-hidden">
-      <Hero dict={dict} />
+      <Hero dict={dict} locale={resolvedParams.locale} />
       <main>
         <Container className="mt-10">
           <LogoCloud />
