@@ -7,6 +7,7 @@ import {
 } from '@headlessui/react'
 import { Bars2Icon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
+import { LanguageSwitcher } from './language-switcher'
 import { Link } from './link'
 import { Logo } from './logo'
 import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
@@ -92,7 +93,12 @@ export function Navbar({ banner }: { banner?: React.ReactNode }) {
               </div>
             )}
           </div>
-          <DesktopNav />
+          <div className="flex items-center gap-6">
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
+            <DesktopNav />
+          </div>
           <MobileNavButton />
         </PlusGridRow>
       </PlusGrid>
